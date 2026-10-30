@@ -79,7 +79,8 @@ def main(argv=None):
             style = load_style(args.style)
             options = {key: getattr(args, key) for key in ("font", "font_size", "margin_v")
                        if getattr(args, key) is not None}
-            config = replace(style.CONFIG, **options)
+            config = replace(style.CONFIG, **options,
+                             canvas_width=args.width, canvas_height=args.height)
             events = style.generate(transcript, config)
             content = render_ass(events, config, width=args.width, height=args.height)
             args.output.parent.mkdir(parents=True, exist_ok=True)

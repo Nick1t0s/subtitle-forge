@@ -16,8 +16,14 @@ class StyleConfig:
     shadow: float = 1
     alignment: int = 2
     margin_v: int = 70
+    canvas_width: int = 1080
+    canvas_height: int = 1920
 
     def __post_init__(self) -> None:
+        for name in ("canvas_width", "canvas_height"):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+                raise ValueError(f"{name} must be a positive integer")
         if (not isinstance(self.font, str) or not self.font.strip()
                 or any(char in self.font for char in ",\r\n")):
             raise ValueError("font must be non-empty and cannot contain commas or newlines")

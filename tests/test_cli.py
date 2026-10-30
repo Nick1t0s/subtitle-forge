@@ -55,7 +55,7 @@ class CliTests(unittest.TestCase):
             self.assertIn("PlayResX: 1080", content)
             self.assertIn("PlayResY: 1920", content)
             self.assertIn("&H0000E8FF", content)
-            self.assertIn(r"\t(", content)
+            self.assertIn(r"\fscx135", content)
 
 
 if __name__ == "__main__":
