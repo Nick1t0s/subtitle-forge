@@ -31,11 +31,13 @@ python3 -m subtitle_forge generate transcript.json \
 
 ```sh
 python3 -m subtitle_forge generate transcript.json \
-  --style impact-bottom -o impact-bottom.ass \
-  --burn input.mp4 --video-output impact-bottom.mp4
+  --style impact-bottom -o ass-sources/impact-bottom.ass \
+  --burn input.mp4 --video-output previews/impact-bottom.mp4
 ```
 
 Обе сборки примера на русском находятся в `demo-youtube/russian/`: `impact-bottom.mp4` и `impact-center.mp4`.
+
+Для просмотра без автоматического подключения внешних дорожек также подготовлены MP4 в `demo-youtube/clean-previews/`. Исходные ASS перенесены в `demo-youtube/ass-sources/russian/`. Если положить одноимённые ASS и уже прожжённый MP4 рядом, некоторые плееры покажут текст дважды; при просмотре прожжённого видео внешние субтитры следует отключить.
 
 ## Шрифт
 

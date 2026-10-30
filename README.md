@@ -184,6 +184,8 @@ def generate(transcript, config):
 
 ## Частые ошибки
 
+- **Двойной текст при просмотре MP4** — после `--burn` субтитры уже находятся в видеокадре. Плеер может дополнительно подключить лежащий рядом одноимённый `.ass`. Отключите внешнюю дорожку субтитров или храните исходные ASS отдельно от готовых MP4; например, `-o ass-sources/captions.ass --video-output previews/captions.mp4`.
+
 - **`Output already exists`** — выберите другой путь либо добавьте `--overwrite`.
 - **`--burn and --video-output must be used together`** — укажите оба параметра прожига или уберите оба.
 - **`ffmpeg with libass is required`** — установите FFmpeg-сборку с фильтром libass и проверьте `ffmpeg -filters`.
