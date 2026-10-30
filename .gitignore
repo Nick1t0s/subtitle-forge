@@ -4,3 +4,9 @@ __pycache__/
 .env
 .env.*
 !.env.example
+*.egg-info/
+build/
+dist/
+*.mp4
+*.wav
+*.ass

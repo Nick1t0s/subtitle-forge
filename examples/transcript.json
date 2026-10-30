@@ -1,0 +1,23 @@
+{
+  "language": "ru",
+  "segments": [
+    {
+      "start": 0.4,
+      "end": 2.1,
+      "text": "Привет, мир!",
+      "words": [
+        {"start": 0.4, "end": 1.0, "word": "Привет,"},
+        {"start": 1.1, "end": 2.1, "word": "мир!"}
+      ]
+    },
+    {
+      "start": 2.4,
+      "end": 3.6,
+      "text": "Как дела?",
+      "words": [
+        {"start": 2.4, "end": 2.9, "word": "Как"},
+        {"start": 3.0, "end": 3.6, "word": "дела?"}
+      ]
+    }
+  ]
+}
