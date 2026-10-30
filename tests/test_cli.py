@@ -18,7 +18,7 @@ class CliTests(unittest.TestCase):
     def test_styles_command_lists_builtins(self):
         result = self.run_cli("styles")
         self.assertEqual(result.returncode, 0, result.stderr)
-        for name in ("classic", "word", "karaoke", "typewriter", "pop"):
+        for name in ("shorts", "classic", "word", "karaoke", "typewriter", "pop"):
             self.assertIn(name, result.stdout)
 
     def test_generate_writes_ass_and_protects_existing_output(self):
@@ -45,6 +45,17 @@ class CliTests(unittest.TestCase):
                                        "--style", "classic", "--video-output", video)
             self.assertNotEqual(only_output.returncode, 0)
             self.assertIn("--burn and --video-output", only_output.stderr)
+
+    def test_default_output_uses_portrait_shorts_style(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "default.ass"
+            result = self.run_cli("generate", ROOT / "examples/transcript.json", "-o", output)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            content = output.read_text(encoding="utf-8")
+            self.assertIn("PlayResX: 1080", content)
+            self.assertIn("PlayResY: 1920", content)
+            self.assertIn("&H0000E8FF", content)
+            self.assertIn(r"\t(", content)
 
 
 if __name__ == "__main__":

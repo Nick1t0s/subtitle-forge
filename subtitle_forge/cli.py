@@ -27,14 +27,16 @@ def parser():
     generate = commands.add_parser("generate", help="Render a JSON/SRT transcript to ASS")
     generate.add_argument("input", type=Path)
     generate.add_argument("-o", "--output", required=True, type=Path)
-    generate.add_argument("--style", default="karaoke", help="Built-in name or trusted .py plugin")
-    generate.add_argument("--width", type=positive, default=1920)
-    generate.add_argument("--height", type=positive, default=1080)
+    generate.add_argument("--style", default="shorts", help="Built-in name or trusted .py plugin (default: shorts)")
+    generate.add_argument("--width", type=positive, default=1080)
+    generate.add_argument("--height", type=positive, default=1920)
     generate.add_argument("--font")
     generate.add_argument("--font-size", type=positive)
     generate.add_argument("--margin-v", type=int)
     generate.add_argument("--burn", type=Path, metavar="VIDEO")
     generate.add_argument("--video-output", type=Path)
+    generate.add_argument("--video-fit", choices=("pad", "crop"), default="pad",
+                          help="Fit video into output frame: pad or center crop (default: pad)")
     generate.add_argument("--overwrite", action="store_true")
     speech = commands.add_parser("transcribe", help="Use existing local faster-whisper with word timestamps")
     speech.add_argument("input", type=Path)
@@ -83,7 +85,8 @@ def main(argv=None):
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(content, encoding="utf-8")
             if args.burn:
-                burn_subtitles(args.burn, args.output, args.video_output, args.overwrite)
+                burn_subtitles(args.burn, args.output, args.video_output, args.overwrite,
+                               width=args.width, height=args.height, fit=args.video_fit)
         print(args.output)
         return 0
     except (ValueError, TypeError, OSError, subprocess.CalledProcessError) as error:

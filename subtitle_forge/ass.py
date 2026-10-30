@@ -82,7 +82,7 @@ def ass_time(t: float) -> str:
 
 
 def render_ass(events: list[Event] | tuple[Event, ...], config: StyleConfig = StyleConfig(),
-               width: int = 1920, height: int = 1080) -> str:
+               width: int = 1080, height: int = 1920) -> str:
     """Render ASS; event text is trusted, preformatted ASS from style plugins.
 
     Plugins must escape all literal user supplied text with :func:`escape_text`.

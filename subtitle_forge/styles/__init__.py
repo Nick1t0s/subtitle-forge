@@ -9,7 +9,7 @@ from uuid import uuid4
 
 from ..ass import StyleConfig
 
-_BUILTINS = ("classic", "word", "karaoke", "typewriter", "pop")
+_BUILTINS = ("shorts", "classic", "word", "karaoke", "typewriter", "pop")
 
 
 def list_styles() -> list[ModuleType]:
