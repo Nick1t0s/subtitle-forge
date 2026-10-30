@@ -30,8 +30,12 @@ def burn_subtitles(video: Path, subtitles: Path, output: Path, overwrite=False,
     with tempfile.TemporaryDirectory(prefix="subtitle-forge-") as temp:
         # A fixed simple name avoids ffmpeg's multiple levels of path escaping.
         shutil.copyfile(subtitles, Path(temp) / "captions.ass")
+        fonts = Path(__file__).parent / "assets/fonts"
+        if fonts.is_dir():
+            shutil.copytree(fonts, Path(temp) / "fonts")
+        ass_filter = "ass=captions.ass:fontsdir=fonts" if fonts.is_dir() else "ass=captions.ass"
         subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error",
                         "-y" if overwrite else "-n", "-i", str(video.resolve()),
-                        "-vf", f"{layout},setsar=1,ass=captions.ass", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
+                        "-vf", f"{layout},setsar=1,{ass_filter}", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
                         "-preset", "medium", "-c:a", "copy", str(output.resolve())],
                        cwd=temp, check=True)

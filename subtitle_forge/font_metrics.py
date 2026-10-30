@@ -5,6 +5,7 @@ from __future__ import annotations
 import functools
 import math
 import os
+from pathlib import Path
 import struct
 import subprocess
 import unicodedata
@@ -131,6 +132,10 @@ class _Font:
 
 @functools.lru_cache(maxsize=64)
 def _resolve_font(font: str) -> _Font:
+    if font.casefold().strip() == "oswald":
+        bundled = Path(__file__).parent / "assets/fonts/Oswald-Bold.ttf"
+        if bundled.is_file():
+            return _Font(str(bundled))
     try:
         result = subprocess.run(
             ["fc-match", "-f", "%{file}", font + ":style=Bold"],

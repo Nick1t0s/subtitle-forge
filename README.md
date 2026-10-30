@@ -112,6 +112,8 @@ JSON содержит массив `segments`. У сегмента обязат�
 | Стиль | Поведение | Размер по умолчанию |
 | --- | --- | ---: |
 | `shorts` | Вертикальные короткие титры: до трёх слов в группе, активное слово подсвечено и увеличивается в такт речи. | 90 |
+| `impact-bottom` | Одно белое слово с толстой чёрной обводкой, внизу кадра. | 128 |
+| `impact-center` | То же оформление по одному слову, по центру кадра. | 128 |
 | `classic` | Обычные фразы с переносами строк, сохраняет исходное время всей реплики. Поддерживает SRT. | 54 |
 | `word` | Одно слово на экране в интервале его метки. | 66 |
 | `karaoke` | Показывает фразу и подсвечивает текущее слово; вне интервалов слов текста нет. | 54 |
@@ -140,6 +142,17 @@ python -m subtitle_forge transcribe VIDEO -o transcript.json [--language ru] [--
 ```
 
 Она запускает `~/whisper-venv/bin/python` и `whisper_worker.py`. Worker использует `WhisperModel("large-v3-turbo", device="cuda", compute_type="float16", local_files_only=True)` и включает `word_timestamps=True`. Следовательно, окружение, CUDA, faster-whisper и файлы модели должны быть готовы заранее. Модель не будет загружаться из сети. При пропуске `--language` язык определяет Whisper.
+
+## Стиль из видео-референса
+
+Два отдельных варианта по [этому Shorts](https://www.youtube.com/shorts/4J9Gg4PXOHY): плотный узкий белый шрифт, толстая чёрная обводка, смена слов без увеличения и анимации. Выбирайте `--style impact-bottom` для нижней позиции или `--style impact-center` для центра кадра:
+
+```sh
+python3 -m subtitle_forge generate transcript.json -o bottom.ass --style impact-bottom
+python3 -m subtitle_forge generate transcript.json -o center.ass --style impact-center
+```
+
+Открытый шрифт Oswald Bold с кириллицей включён в пакет вместе с лицензией SIL OFL. При прожиге FFmpeg загружает его автоматически; для просмотра отдельного ASS в стороннем проигрывателе установите этот шрифт. Он подобран по внешнему виду, точный шрифт оригинала не установлен. Подробности и команды — в [docs/impact-style.md](docs/impact-style.md).
 
 ## Пользовательские стили
 

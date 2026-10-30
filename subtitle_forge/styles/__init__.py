@@ -9,12 +9,16 @@ from uuid import uuid4
 
 from ..ass import StyleConfig
 
-_BUILTINS = ("shorts", "classic", "word", "karaoke", "typewriter", "pop")
+_BUILTINS = ("shorts", "impact-bottom", "impact-center", "classic", "word", "karaoke", "typewriter", "pop")
+
+
+def _builtin(name: str) -> ModuleType:
+    return importlib.import_module(f"{__name__}.{name.replace('-', '_')}")
 
 
 def list_styles() -> list[ModuleType]:
     """Return the built-in style modules in stable display order."""
-    return [importlib.import_module(f"{__name__}.{name}") for name in _BUILTINS]
+    return [_builtin(name) for name in _BUILTINS]
 
 
 def _validate(module: ModuleType) -> ModuleType:
@@ -41,7 +45,7 @@ def load_style(name_or_path: str | Path) -> ModuleType:
     """
     value = str(name_or_path)
     if value in _BUILTINS:
-        return _validate(importlib.import_module(f"{__name__}.{value}"))
+        return _validate(_builtin(value))
     path = Path(value).expanduser()
     if not path.is_file() or path.suffix.lower() != ".py":
         raise ValueError(f"unknown built-in style or Python style file: {value}")

@@ -16,3 +16,6 @@ subtitle-forge = "subtitle_forge.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["subtitle_forge*"]
+
+[tool.setuptools.package-data]
+subtitle_forge = ["assets/fonts/*.ttf", "assets/fonts/*.txt"]
